@@ -25,6 +25,7 @@ export default function RootLayout({
         <html
             lang="en"
             suppressHydrationWarning
+            data-scroll-behavior="smooth"
             className={cn("antialiased", geist.variable, geistMono.variable, "font-sans")}
         >
             <body>

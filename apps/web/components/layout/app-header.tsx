@@ -23,7 +23,7 @@ import { ThemeToggle } from "@workspace/ui/components/theme-toggle"
 
 const AppHeader = () => {
     return (
-        <header className="sticky top-0 z-50 max-w-screen overflow-x-clip bg-background px-2 border-b">
+        <header className="sticky top-0 z-50 max-w-screen overflow-x-clip bg-background border-b">
             <div
                 className="mx-auto flex h-(--header-height) items-center gap-2 border-x pr-2 pl-4 after:z-1 md:max-w-3xl">
                 <div className="flex items-center justify-end gap-2">
