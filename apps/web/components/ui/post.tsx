@@ -29,7 +29,7 @@ const PostCard: FC<PostCardProps> = ({ post, onFollow, ...props }) => {
                             {post.owner.username.charAt(0).toUpperCase()}
                         </AvatarFallback>
                     </Avatar>
-                    <Link href={`/profile/${post.owner.id}`}>
+                    <Link href={`/profile/${post.owner.username}`}>
                         <span className="cursor-pointer truncate font-mono leading-relaxed text-balance transition hover:text-primary">
                             @{post.owner.username}
                         </span>
