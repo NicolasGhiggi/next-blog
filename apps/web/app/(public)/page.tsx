@@ -1,28 +1,31 @@
-import Link from "next/link"
-import { Button } from "@workspace/ui/components/button"
+"use client"
 
-export default function Page() {
+import { PostCard, PostList } from "@/components/ui/post"
+
+const post = {
+    id: "aaaa-bbbb-cccc-dddd-eeee",
+    cover: "/assets/post/post_01.jpg",
+    title: "First post",
+    description: "This is the first post, description for example",
+    createdAt: new Date(),
+    owner: {
+        id: "1111-2222-3333-4444-5555",
+        username: "john_doe",
+        avatar: "https://avatars.githubusercontent.com/u/124599?v=4",
+    }
+}
+
+const Page = () => {
     return (
-        <div className="flex min-h-svh">
-            <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-                <div>
-                    <h1 className="font-medium">Project ready!</h1>
-                    <p>You may now add components and start building.</p>
-                    <p>We&apos;ve already added the button component for you.</p>
-                    <Button className="mt-2">Button</Button>
-                </div>
-                <div className="text-muted-foreground font-mono text-xs">
-                    (Press <kbd>d</kbd> to toggle dark mode)
-                </div>
-                <div className="flex items-center gap-2">
-                    <Link href="/login">
-                        <Button>Login</Button>
-                    </Link>
-                    <Link href="/register">
-                        Register
-                    </Link>
-                </div>
-            </div>
+        <div className="flex flex-col p-2 min-h-[calc(100vh-var(--header-height)-1px)]">
+            <PostList label="Post section">
+                <PostCard
+                    post={post}
+                    onFollow={() => alert("todo: Follow")}
+                />
+            </PostList>
         </div>
     )
 }
+
+export default Page
