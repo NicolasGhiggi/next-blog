@@ -1,3 +1,4 @@
+import { ReactNode } from "react"
 import { Geist, Geist_Mono,  } from "next/font/google"
 
 import "@workspace/ui/globals.css"
@@ -18,7 +19,7 @@ const geistMono = Geist_Mono({
 export default function RootLayout({
     children,
 }: Readonly<{
-    children: React.ReactNode
+    children: ReactNode
 }>) {
     return (
         <html
