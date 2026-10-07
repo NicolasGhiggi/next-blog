@@ -22,7 +22,6 @@ export default function Page() {
                     <Link href="/register">
                         <Button variant="secondary">Register</Button>
                     </Link>
-                    <ThemeToggle />
                 </div>
             </div>
         </div>
