@@ -8,6 +8,7 @@ import { Post } from "@workspace/ui/interfaces/post"
 import { Button } from "@workspace/ui/components/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card"
+import { BLUR_DATA_URL } from "@/lib/constants"
 
 interface PostCardProps extends ComponentProps<"div"> {
     post: Post
@@ -20,11 +21,16 @@ const PostCard: FC<PostCardProps> = ({ post, onFollow, ...props }) => {
             <CardHeader>
                 <CardTitle className="flex min-w-0 items-center gap-2">
                     <Avatar>
-                        <AvatarImage src={post.owner.avatar} alt={post.owner.username} />
-                        <AvatarFallback>{post.owner.username.charAt(0).toUpperCase()}</AvatarFallback>
+                        <AvatarImage
+                            src={post.owner.avatar}
+                            alt={post.owner.username}
+                        />
+                        <AvatarFallback>
+                            {post.owner.username.charAt(0).toUpperCase()}
+                        </AvatarFallback>
                     </Avatar>
-                    <Link href={`/users/${post.owner.id}`}>
-                        <span className="truncate text-balance leading-relaxed font-mono hover:text-primary transition cursor-pointer">
+                    <Link href={`/profile/${post.owner.id}`}>
+                        <span className="cursor-pointer truncate font-mono leading-relaxed text-balance transition hover:text-primary">
                             @{post.owner.username}
                         </span>
                     </Link>
@@ -36,21 +42,25 @@ const PostCard: FC<PostCardProps> = ({ post, onFollow, ...props }) => {
                 </CardAction>
             </CardHeader>
             <CardContent>
-                <div className="flex flex-col gap-2 mb-2">
-                    <h2 className="text-xl font-bold text-balance leading-relaxed">{post.title}</h2>
-                    {post.description &&
-                        <p className="text-balance leading-relaxed">
+                <div className="mb-2 flex flex-col gap-2">
+                    <h2 className="text-xl leading-relaxed font-bold text-balance">
+                        {post.title}
+                    </h2>
+                    {post.description && (
+                        <p className="leading-relaxed text-balance">
                             {post.description}
                         </p>
-                    }
+                    )}
                 </div>
-                <div className="group relative aspect-16/10 w-full overflow-hidden rounded-xl cursor-pointer">
+                <div className="group relative aspect-16/10 w-full cursor-pointer overflow-hidden rounded-xl">
                     <Image
                         src={post.cover}
                         alt={`Post of ${post.owner.username}`}
                         fill
+                        placeholder="blur"
+                        blurDataURL={BLUR_DATA_URL}
                         sizes="(max-width: 768px) 100vw, 480px"
-                        className="object-cover group-hover:scale-105 transition"
+                        className="object-cover transition group-hover:scale-105"
                     />
                     <div className="pointer-events-none absolute inset-0 rounded-xl inset-ring-1 inset-ring-foreground/10" />
                 </div>

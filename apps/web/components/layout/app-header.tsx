@@ -11,7 +11,7 @@ import {
 } from "@workspace/ui/components/navigation-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar"
 
-import { APP_NAME, ROUTES } from "@/lib/contants"
+import { APP_NAME, ROUTES } from "@/lib/constants"
 import {
     DropdownMenu,
     DropdownMenuContent,

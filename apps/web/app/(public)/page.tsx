@@ -17,7 +17,8 @@ const post = {
 
 const Page = () => {
     return (
-        <div className="flex flex-col p-2 min-h-[calc(100vh-var(--header-height)-1px)]">
+        <div className="flex flex-col p-2">
+            <h1 className="sr-only">Home</h1>
             <PostList label="Post section">
                 <PostCard
                     post={post}
