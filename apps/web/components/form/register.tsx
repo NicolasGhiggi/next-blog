@@ -5,13 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "@workspace/ui/components/toast"
 import { Button } from "@workspace/ui/components/button"
 import { FieldGroup } from "@workspace/ui/components/field"
-import { registerSchema, registerSchemaType } from "@/schemas/register"
 import { FormTextField } from "@/components/ui/form-text-field"
+import { registerSchema, registerSchemaType } from "@/schemas/register"
 
 const RegisterForm = () => {
     const form = useForm<registerSchemaType>({
         resolver: zodResolver(registerSchema),
-        // mode: "onTouched",
         defaultValues: {
             displayName: "",
             username: "",
@@ -26,7 +25,7 @@ const RegisterForm = () => {
         const id = toast.add({
             title: "You submitted the following values:",
             description: (
-                <pre className="mt-2 w-[320px] overflow-x-auto rounded-md bg-code p-4 text-code-foreground">
+                <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
                     <code>{JSON.stringify(data, null, 2)}</code>
                 </pre>
             ),
@@ -45,7 +44,7 @@ const RegisterForm = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             noValidate
         >
-            <FieldGroup>
+            <FieldGroup className="gap-5">
                 <FormTextField
                     control={form.control}
                     name="displayName"
@@ -54,6 +53,7 @@ const RegisterForm = () => {
                     description="The name you want to show to everyone"
                     autoComplete="name"
                 />
+
                 <FormTextField
                     control={form.control}
                     name="username"
@@ -62,6 +62,7 @@ const RegisterForm = () => {
                     description="3-20 characters: letters, numbers, _ and ."
                     autoComplete="username"
                 />
+
                 <FormTextField
                     control={form.control}
                     name="email"
@@ -70,6 +71,7 @@ const RegisterForm = () => {
                     placeholder="john@example.com"
                     autoComplete="email"
                 />
+
                 <FormTextField
                     control={form.control}
                     name="phone"
@@ -79,6 +81,7 @@ const RegisterForm = () => {
                     description="Include the country code, without spaces"
                     autoComplete="tel"
                 />
+
                 <FormTextField
                     control={form.control}
                     name="password"
@@ -87,6 +90,7 @@ const RegisterForm = () => {
                     description="At least 8 characters, with upper/lowercase, a number and a symbol"
                     autoComplete="new-password"
                 />
+
                 <FormTextField
                     control={form.control}
                     name="confirmPassword"
@@ -94,8 +98,13 @@ const RegisterForm = () => {
                     type="password"
                     autoComplete="new-password"
                 />
-                <Button type="submit" form="form-register" disabled={form.formState.isSubmitting}>
-                    Submit
+
+                <Button
+                    type="submit"
+                    className="mt-1 w-full"
+                    disabled={form.formState.isSubmitting}
+                >
+                    Create account
                 </Button>
             </FieldGroup>
         </form>
