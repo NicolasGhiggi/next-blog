@@ -13,7 +13,7 @@ const Layout: FC<Props> = ({ children }) => {
             <AppHeader />
             <DotBackground fade />
             <div className="relative mx-auto flex w-full max-w-screen flex-1 flex-col border-x bg-background/50 md:max-w-3xl">
-                <main className="flex-1">
+                <main className="flex-1 flex flex-col">
                     {children}
                 </main>
                 <AppFooter />

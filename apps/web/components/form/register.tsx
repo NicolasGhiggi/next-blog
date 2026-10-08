@@ -104,7 +104,7 @@ const RegisterForm = () => {
                     className="mt-1 w-full"
                     disabled={form.formState.isSubmitting}
                 >
-                    Create account
+                    Sign Up
                 </Button>
             </FieldGroup>
         </form>
