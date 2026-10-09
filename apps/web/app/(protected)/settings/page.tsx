@@ -1,10 +1,10 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@workspace/ui/components/tabs"
 import { SettingsContainer } from "@/components/ui/settings-container"
 
-import { ProfileTab } from "./_components/profile-tab"
-import { AccountTab } from "./_components/account-tab"
-import { NotificationTab } from "./_components/notification-tab"
-import { PrivacyAndSecureTab } from "./_components/privacy-and-secure-tab"
+import { ProfileTab } from "@/app/(protected)/settings/_components/profile-tab"
+import { AccountTab } from "@/app/(protected)/settings/_components/account-tab"
+import { NotificationTab } from "@/app/(protected)/settings/_components/notification-tab"
+import { PrivacyAndSecureTab } from "@/app/(protected)/settings/_components/privacy-and-secure-tab"
 
 const TABS = [
     { id: "profile", label: "Profile", content: <ProfileTab /> },

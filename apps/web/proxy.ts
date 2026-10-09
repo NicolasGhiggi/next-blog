@@ -1,19 +1,33 @@
-import { NextRequest } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { auth0 } from "@/lib/auth0"
 
-export async function proxy(request: NextRequest) {
-    const authResponse = await auth0.middleware(request);
+const PROTECTED = ["/settings", "/dashboard"]
 
-    // Always return the auth response.
-    //
-    // Note: The auth response forwards requests to your app routes by default.
-    // If you need to block requests, do it before calling auth0.middleware() or
-    // copy the authResponse headers except for x-middleware-next to your blocking response.
-    return authResponse;
+const isProtected = (path: string) =>
+    PROTECTED.some(p => path === p || path.startsWith(`${p}/`))
+
+export async function proxy(request: NextRequest) {
+    const authResponse = await auth0.middleware(request)
+
+    const { pathname, search } = request.nextUrl
+
+    if (pathname.startsWith("/auth")) return authResponse
+
+    if (isProtected(pathname)) {
+        const session = await auth0.getSession(request)
+
+        if (!session) {
+            const loginUrl = new URL("/auth/login", request.nextUrl.origin)
+            loginUrl.searchParams.set("returnTo", pathname + search)
+            return NextResponse.redirect(loginUrl)
+        }
+    }
+
+    return authResponse
 }
 
 export const config = {
     matcher: [
         "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
     ],
-};
+}
