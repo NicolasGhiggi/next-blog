@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { RegisterForm } from "@/components/form/register"
+import { RegisterForm } from "@/features/auth/components/register-form"
 
 export const metadata: Metadata = {
     title: "Create account",

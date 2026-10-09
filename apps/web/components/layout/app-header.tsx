@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { CogIcon, LogOutIcon, PlusSquareIcon, TriangleIcon, UserIcon } from "lucide-react"
+import { CogIcon, LogOutIcon, TriangleIcon, UserIcon } from "lucide-react"
 
 import {
     NavigationMenu,
@@ -27,7 +27,7 @@ const AppHeader = () => {
             <div
                 className="mx-auto flex h-(--header-height) items-center gap-2 border-x pr-2 pl-4 after:z-1 md:max-w-3xl">
                 <div className="flex items-center justify-end gap-2">
-                    <TriangleIcon fill="currentColor" /> {APP_NAME}
+                    <TriangleIcon className="size-5" fill="currentColor" /> {APP_NAME}
                 </div>
                 <div className="flex-1" />
                 <NavigationMenu>
@@ -54,12 +54,16 @@ const AppHeader = () => {
 
                                          } />
                     <DropdownMenuContent className="w-45" align="end">
-                        <DropdownMenuItem>
-                            <UserIcon /> Account
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <CogIcon /> Settings
-                        </DropdownMenuItem>
+                        <Link href="/settings?tab=account">
+                            <DropdownMenuItem>
+                                <UserIcon /> Account
+                            </DropdownMenuItem>
+                        </Link>
+                        <Link href="/settings">
+                            <DropdownMenuItem>
+                                <CogIcon /> Settings
+                            </DropdownMenuItem>
+                        </Link>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             <LogOutIcon /> Logout

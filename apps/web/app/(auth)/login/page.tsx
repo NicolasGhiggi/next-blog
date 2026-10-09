@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { LoginForm } from "@/components/form/login"
+import { LoginForm } from "@/features/auth/components/login-form"
 
 export const metadata: Metadata = {
     title: "Login",

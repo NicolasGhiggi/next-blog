@@ -6,7 +6,7 @@ import { toast } from "@workspace/ui/components/toast"
 import { Button } from "@workspace/ui/components/button"
 import { FieldGroup } from "@workspace/ui/components/field"
 import { FormTextField } from "@/components/ui/form-text-field"
-import { registerSchema, registerSchemaType } from "@/schemas/register"
+import { registerSchema, registerSchemaType } from "@/features/auth/schemas"
 
 const RegisterForm = () => {
     const form = useForm<registerSchemaType>({
