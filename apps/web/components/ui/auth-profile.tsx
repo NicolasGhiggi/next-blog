@@ -17,45 +17,44 @@ const AuthProfile = async () => {
     if (!session) {
         return (
             <>
-                <Link href="/signup">
+                <a href="/auth/login?screen_hint=signup">
                     <Button>
                         Signup
                     </Button>
-                </Link>
-                <Link href="/login">
+                </a>
+                <a href="/auth/login">
                     <Button variant="secondary">
                         Login
                     </Button>
-                </Link>
+                </a>
             </>
         )
     }
+
+    const user = session.user
+
+    const initials = (user.name ?? user.email ?? "?").slice(0, 2).toUpperCase()
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger render={
                                       <Button variant="ghost" size="icon-lg">
                                          <Avatar>
-                                             <AvatarImage
-                                                 src={"https://avatars.githubusercontent.com/u/124599?v=4"} />
-                                             <AvatarFallback>NB</AvatarFallback>
+                                             <AvatarImage src={user.picture} />
+                                             <AvatarFallback>{initials}</AvatarFallback>
                                          </Avatar>
                                      </Button>
 
                                  } />
             <DropdownMenuContent className="w-45" align="end">
-                <Link href="/settings?tab=account">
-                    <DropdownMenuItem>
-                        <UserIcon /> Account
-                    </DropdownMenuItem>
-                </Link>
-                <Link href="/settings">
-                    <DropdownMenuItem>
-                        <CogIcon /> Settings
-                    </DropdownMenuItem>
-                </Link>
+                <DropdownMenuItem render={<Link href="/settings?tab=account" />}>
+                    <UserIcon /> Account
+                </DropdownMenuItem>
+                <DropdownMenuItem render={<Link href="/settings" />}>
+                    <CogIcon /> Settings
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem render={<a href="/auth/logout" />}>
                     <LogOutIcon /> Logout
                 </DropdownMenuItem>
             </DropdownMenuContent>
