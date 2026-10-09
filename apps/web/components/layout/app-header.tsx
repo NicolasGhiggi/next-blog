@@ -1,7 +1,5 @@
-"use client"
-
 import Link from "next/link"
-import { CogIcon, LogOutIcon, TriangleIcon, UserIcon } from "lucide-react"
+import { TriangleIcon } from "lucide-react"
 
 import {
     NavigationMenu,
@@ -9,19 +7,12 @@ import {
     NavigationMenuLink,
     NavigationMenuList,
 } from "@workspace/ui/components/navigation-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar"
 
 import { APP_NAME, ROUTES } from "@/lib/constants"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem, DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@workspace/ui/components/dropdown-menu"
-import { Button } from "@workspace/ui/components/button"
 import { ThemeToggle } from "@workspace/ui/components/theme-toggle"
+import { AuthProfile } from "@/components/ui/auth-profile"
 
-const AppHeader = () => {
+const AppHeader = async () => {
     return (
         <header className="sticky top-0 z-50 max-w-screen overflow-x-clip bg-background border-b">
             <div
@@ -42,34 +33,7 @@ const AppHeader = () => {
                     </NavigationMenuList>
                 </NavigationMenu>
                 <ThemeToggle />
-                <DropdownMenu>
-                    <DropdownMenuTrigger render={
-                                              <Button variant="ghost" size="icon-lg">
-                                                 <Avatar>
-                                                     <AvatarImage
-                                                         src={"https://avatars.githubusercontent.com/u/124599?v=4"} />
-                                                     <AvatarFallback>NB</AvatarFallback>
-                                                 </Avatar>
-                                             </Button>
-
-                                         } />
-                    <DropdownMenuContent className="w-45" align="end">
-                        <Link href="/settings?tab=account">
-                            <DropdownMenuItem>
-                                <UserIcon /> Account
-                            </DropdownMenuItem>
-                        </Link>
-                        <Link href="/settings">
-                            <DropdownMenuItem>
-                                <CogIcon /> Settings
-                            </DropdownMenuItem>
-                        </Link>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <LogOutIcon /> Logout
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <AuthProfile />
             </div>
         </header>
     )

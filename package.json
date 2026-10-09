@@ -26,6 +26,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "@auth0/nextjs-auth0": "^4.31.1",
     "@hookform/resolvers": "^5.9.1",
     "react-hook-form": "^7.89.0"
   }
