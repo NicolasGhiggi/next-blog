@@ -4,7 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { PlusIcon } from "lucide-react"
 import { ComponentProps, FC } from "react"
-import { Post } from "@workspace/ui/interfaces/post"
+import { Post } from "@workspace/db/models/post"
 import { Button } from "@workspace/ui/components/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card"
@@ -19,22 +19,22 @@ const PostCard: FC<PostCardProps> = ({ post, onFollow, ...props }) => {
     return (
         <Card {...props} size="sm">
             <CardHeader>
-                <CardTitle className="flex min-w-0 items-center gap-2">
+                {post.owner && <CardTitle className="flex min-w-0 items-center gap-2">
                     <Avatar>
                         <AvatarImage
-                            src={post.owner.avatar}
-                            alt={post.owner.username}
+                            src={post.owner.picture}
+                            alt={post.owner.nickname}
                         />
                         <AvatarFallback>
-                            {post.owner.username.charAt(0).toUpperCase()}
+                            {post.owner.nickname?.charAt(0).toUpperCase() || "?"}
                         </AvatarFallback>
                     </Avatar>
-                    <Link href={`/profile/${post.owner.username}`}>
+                    <Link href={`/profile/${post.owner.sub}`}>
                         <span className="cursor-pointer truncate font-mono leading-relaxed text-balance transition hover:text-primary">
-                            @{post.owner.username}
+                            @{post.owner.nickname}
                         </span>
                     </Link>
-                </CardTitle>
+                </CardTitle>}
                 <CardAction>
                     <Button size="sm" onClick={onFollow}>
                         <PlusIcon /> Follow
@@ -54,8 +54,8 @@ const PostCard: FC<PostCardProps> = ({ post, onFollow, ...props }) => {
                 </div>
                 <div className="group relative aspect-16/10 w-full cursor-pointer overflow-hidden rounded-xl">
                     <Image
-                        src={post.cover}
-                        alt={`Post of ${post.owner.username}`}
+                        src={post.cover || "/assets/post/post_01.jpg"}
+                        alt={`Post of ${post.owner?.nickname}`}
                         fill
                         placeholder="blur"
                         blurDataURL={BLUR_DATA_URL}

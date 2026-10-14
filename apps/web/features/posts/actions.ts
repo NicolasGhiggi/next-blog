@@ -1,7 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { createPost } from "@workspace/db"
+import { createPost } from "@workspace/db/models/post"
 import { auth0 } from "@/lib/auth0"
 
 export async function newPost(formData: FormData) {

@@ -1,14 +1,16 @@
 import { ResultSetHeader, RowDataPacket } from "mysql2/promise"
+import { User } from "#models/user"
 import { pool } from "#connection"
 
-export type Post = {    
-    id: number;
-    user_id: string;
-    title: string;
-    description: string | null;
-    cover: string | null;
-    created_at: Date;
-    updated_at: Date;
+export interface Post {    
+    id: number
+    userId: string
+    title: string
+    description: string | null
+    cover: string | null
+    createdAt: Date
+    updatedAt: Date
+    owner?: User
 }
 
 export const createPost = async (input: {
