@@ -1,26 +1,32 @@
 # next-blog
 
-A multi-user blogging platform: every user can have their own public profile and publish posts written in **Markdown**. Built with **Next.js** and **Auth0**, in a single **monorepo**. The UI is crafted *pixel perfect* with **shadcn/ui** and **Tailwind CSS**.
+A multi-user blogging platform: every user can have their own public profile and publish posts written in **Markdown**. Built with **Next.js** and **Auth0**, in a single **monorepo**. The UI is crafted _pixel perfect_ with **shadcn/ui** and **Tailwind CSS**.
 
 ---
 
 ## Table of Contents
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Monorepo Structure](#monorepo-structure)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Auth0 Setup](#auth0-setup)
-- [Environment Variables](#environment-variables)
-- [Running in Development](#running-in-development)
-- [Authentication Flow](#authentication-flow)
-- [How Posts Work](#how-posts-work)
-- [Application Areas](#application-areas)
-- [Useful Scripts](#useful-scripts)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [License](#license)
+- [next-blog](#next-blog)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+    - [User area](#user-area)
+    - [General](#general)
+  - [Tech Stack](#tech-stack)
+  - [Monorepo Structure](#monorepo-structure)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+  - [Auth0 Setup](#auth0-setup)
+  - [Environment Variables](#environment-variables)
+    - [Web app (`apps/web/.env.local`)](#web-app-appswebenvlocal)
+  - [Running in Development](#running-in-development)
+  - [Authentication Flow](#authentication-flow)
+  - [How Posts Work](#how-posts-work)
+  - [Application Areas](#application-areas)
+  - [Useful Scripts](#useful-scripts)
+  - [Roadmap](#roadmap)
+  - [Contributing](#contributing)
+  - [Security](#security)
+  - [License](#license)
 
 ---
 
@@ -46,16 +52,16 @@ A multi-user blogging platform: every user can have their own public profile and
 
 ## Tech Stack
 
-| Layer          | Technology                                                                          |
-| -------------- | ----------------------------------------------------------------------------------- |
-| Framework      | [Next.js](https://nextjs.org/) (App Router, Server Components, Server Actions), React, TypeScript |
-| UI             | [shadcn/ui](https://ui.shadcn.com/), [Tailwind CSS](https://tailwindcss.com/)       |
+| Layer          | Technology                                                                                           |
+| -------------- | ---------------------------------------------------------------------------------------------------- |
+| Framework      | [Next.js](https://nextjs.org/) (App Router, Server Components, Server Actions), React, TypeScript    |
+| UI             | [shadcn/ui](https://ui.shadcn.com/), [Tailwind CSS](https://tailwindcss.com/)                        |
 | Authentication | [Auth0](https://auth0.com/) with [`@auth0/nextjs-auth0`](https://github.com/auth0/nextjs-auth0) (v4) |
-| User profile   | Auth0 Management API (via the `auth0` Node SDK)                                     |
-| Database       | PostgreSQL / MySQL, accessed through Prisma                                         |
-| Validation     | [Zod](https://zod.dev/)                                                             |
-| Content        | Markdown                                                                            |
-| Tooling        | pnpm workspaces                                                                     |
+| User profile   | Auth0 Management API (via the `auth0` Node SDK)                                                      |
+| Database       | PostgreSQL / MySQL, accessed through [Prisma](https://www.prisma.io/)                                |
+| Validation     | [Zod](https://zod.dev/)                                                                              |
+| Content        | Markdown                                                                                             |
+| Tooling        | npm workspaces, [Turborepo](https://turbo.build/repo), ESLint, Prettier                              |
 
 > There is no separate backend: server logic lives in Next.js Server Components, Server Actions and Route Handlers.
 
@@ -63,19 +69,24 @@ A multi-user blogging platform: every user can have their own public profile and
 
 ## Monorepo Structure
 
-```text
+```
 next-blog/
+├── .github/
+│   └── ISSUE_TEMPLATE/       # issue templates
 ├── apps/
-│   └── web/                  # Next.js app: public site, user area and admin area
+│   └── web/                  # Next.js app: public site and user area
 │       ├── app/              # routes (App Router)
 │       ├── features/         # feature modules (e.g. features/auth)
 │       ├── lib/              # shared server utilities (auth0 client, db)
 │       └── proxy.ts          # session handling and route protection
 ├── packages/
 │   └── ui/                   # shared shadcn/ui components (@workspace/ui)
-├── .gitignore
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── SECURITY.md
 ├── package.json              # workspace root
-├── pnpm-workspace.yaml
+├── turbo.json                # Turborepo pipeline
 └── README.md
 ```
 
@@ -84,7 +95,7 @@ next-blog/
 ## Requirements
 
 - **Node.js** >= 20
-- **pnpm**
+- **npm** (bundled with Node.js)
 - **PostgreSQL** or **MySQL**
 - An **Auth0** tenant (the free plan is enough)
 
@@ -100,9 +111,12 @@ cd next-blog
 # 2. Install dependencies
 npm install
 
-# 3. Configure apps/web/.env.local (see below), then set up the database
+# 3. Create apps/web/.env.local and fill it in
+#    (see "Auth0 Setup" and "Environment Variables" below)
+
+# 4. Set up the database
 cd apps/web
-npm prisma migrate dev
+npx prisma migrate dev
 ```
 
 ---
@@ -111,13 +125,13 @@ npm prisma migrate dev
 
 You need **two** applications in your Auth0 tenant:
 
-1. **Next Blog** (type *Regular Web Application*): handles user login.
-    - Allowed Callback URLs: `http://localhost:3000/auth/callback`
-    - Allowed Logout URLs: `http://localhost:3000`
-    - Allowed Web Origins: `http://localhost:3000`
-2. **Next Blog - Management API** (type *Machine to Machine*): used by the server to update user profiles.
-    - Authorize it on the **Auth0 Management API**
-    - Grant only the `read:users` and `update:users` permissions
+1. **Next Blog** (type _Regular Web Application_): handles user login.
+   - Allowed Callback URLs: `http://localhost:3000/auth/callback`
+   - Allowed Logout URLs: `http://localhost:3000`
+   - Allowed Web Origins: `http://localhost:3000`
+2. **Next Blog - Management API** (type _Machine to Machine_): used by the server to update user profiles.
+   - Authorize it on the **Auth0 Management API**
+   - Grant only the `read:users` and `update:users` permissions
 
 When deploying, add the production URLs to the same Callback / Logout / Web Origins lists.
 
@@ -127,7 +141,7 @@ When deploying, add the production URLs to the same Callback / Logout / Web Orig
 
 ### Web app (`apps/web/.env.local`)
 
-```env
+```bash
 # Auth0 - Regular Web Application
 AUTH0_SECRET=             # generate with: openssl rand -hex 32
 APP_BASE_URL=http://localhost:3000
@@ -194,25 +208,31 @@ Welcome to my blog! Here I write about **web development** and everything I'm pa
 
 ## Application Areas
 
-| Area           | Path                  | Access                 |
-| -------------- | --------------------- | ---------------------- |
-| Public site    | `/`                   | Everyone               |
-| Public profile | `/profile/[username]` | Everyone               |
-| Onboarding     | `/onboarding`         | Authenticated users    |
-| Settings       | `/settings`           | Authenticated users    |
-| User area      | `/dashboard`          | Authenticated users    |
+| Area           | Path                  | Access              |
+| -------------- | --------------------- | ------------------- |
+| Public site    | `/`                   | Everyone            |
+| Public profile | `/profile/[username]` | Everyone            |
+| Onboarding     | `/onboarding`         | Authenticated users |
+| Settings       | `/settings`           | Authenticated users |
+| User area      | `/dashboard`          | Authenticated users |
 
 ---
 
 ## Useful Scripts
 
-```bash
-npm run dev                    # start the development server
-npm run build                  # production build
-npm run lint                   # linting
+From the repository root:
 
-npm prisma migrate dev     # run migrations (from apps/web)
-npm prisma studio          # browse the database
+```bash
+npm run dev       # start the development server
+npm run build     # production build
+npm run lint      # linting
+```
+
+From `apps/web`:
+
+```bash
+npx prisma migrate dev   # run migrations
+npx prisma studio        # browse the database
 ```
 
 ---
@@ -229,7 +249,9 @@ npm prisma studio          # browse the database
 
 ## Contributing
 
-Contributions are welcome!
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and guidelines, and follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+
+Quick start:
 
 1. Fork the project
 2. Create a branch (`git checkout -b feature/new-feature`)
@@ -239,6 +261,12 @@ Contributions are welcome!
 
 ---
 
+## Security
+
+Please do **not** report security vulnerabilities through public issues. See [SECURITY.md](SECURITY.md) for how to report them privately.
+
+---
+
 ## License
 
-Distributed under the **MIT** license. See the `LICENSE` file for more details.
+Distributed under the **MIT** license. See the [LICENSE](LICENSE) file for more details.
