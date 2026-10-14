@@ -1,4 +1,4 @@
-import mysql, { type RowDataPacket } from "mysql2/promise"
+import mysql from "mysql2/promise"
 
 const globalForDb = globalThis as unknown as { pool?: mysql.Pool };
 
