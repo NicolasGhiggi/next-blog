@@ -1,5 +1,5 @@
 import { RowDataPacket } from "mysql2/promise"
-import { pool } from "../connection"
+import { pool } from "#connection"
 
 export const follow = async (followerId: string, followingId: string) => {
     if (followerId === followingId) throw new Error("You cannot follow yourself");

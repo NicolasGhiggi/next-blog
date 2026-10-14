@@ -1,7 +1,7 @@
 import { ResultSetHeader, RowDataPacket } from "mysql2/promise"
-import { pool } from "../connection"
+import { pool } from "#connection"
 
-export type Post = {
+export type Post = {    
     id: number;
     user_id: string;
     title: string;
