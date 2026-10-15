@@ -9,9 +9,10 @@ import {
 import { Button } from "@workspace/ui/components/button"
 import { PlusIcon } from "lucide-react"
 import { Separator } from "@workspace/ui/components/separator"
+import { auth0 } from "@/lib/auth0"
 
 interface Props {
-    params: Promise<{ username: string }>
+    params: Promise<{ sub: string }>
 }
 
 const STATS = [
@@ -21,9 +22,9 @@ const STATS = [
 ]
 
 const Page: FC<Props> = async ({ params }) => {
-    const { username } = await params
+    const { sub } = await params
 
-    if (!username) {
+    if (!sub) {
         return <p>No profile found</p>
     }
 
@@ -33,10 +34,10 @@ const Page: FC<Props> = async ({ params }) => {
 
     return (
         <div className="flex flex-col p-2 [--avatar:5rem] sm:[--avatar:6rem] md:[--avatar:7.5rem]">
-            <div className="group relative aspect-video w-full cursor-pointer rounded-xl sm:aspect-[16/6]">
+            <div className="group relative aspect-video w-full cursor-pointer rounded-xl sm:aspect-16/6">
                 <Image
                     src="/assets/post/post_01.jpg"
-                    alt={`Post of ${username}`}
+                    alt={`Post of ${sub}`}
                     fill
                     placeholder="blur"
                     blurDataURL={BLUR_DATA_URL}
@@ -47,17 +48,17 @@ const Page: FC<Props> = async ({ params }) => {
                 <Avatar className="absolute bottom-0 left-4 size-(--avatar) translate-y-1/2 rounded-full outline-4 outline-background sm:left-6 md:left-8">
                     <AvatarImage
                         src="https://avatars.githubusercontent.com/u/124599?v=4"
-                        alt={`Avatar of ${username}`}
+                        alt={`Avatar of ${sub}`}
                     />
                     <AvatarFallback className="text-lg sm:text-xl md:text-2xl">
-                        {username.slice(0, 2).toUpperCase()}
+                        {sub.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                 </Avatar>
             </div>
             <div className="flex flex-col gap-3 px-4 pt-[calc(var(--avatar)/2+0.75rem)] sm:gap-2 sm:px-6 sm:pt-3 md:px-8">
                 <div className="flex min-h-9 items-center justify-between gap-3 sm:pl-[calc(var(--avatar)+1rem)]">
                     <h1 className="min-w-0 truncate font-mono text-lg leading-none sm:text-xl">
-                        @{username}
+                        @{sub}
                     </h1>
                     <Button size="sm" className="shrink-0">
                         <PlusIcon /> Follow
