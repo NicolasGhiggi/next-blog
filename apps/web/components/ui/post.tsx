@@ -23,47 +23,35 @@ const PostCard: FC<PostCardProps> = ({ post, onFollow, className, ...props }) =>
             size="sm"
             className={cn("overflow-hidden transition-shadow hover:shadow-md", className)}
         >
-            {/* 1. Author: avatar + username on the left, secondary action on the right */}
             <CardHeader>
-<<<<<<< HEAD
                 <CardTitle className="flex min-w-0 items-center gap-2.5">
-=======
-                {post.owner && <CardTitle className="flex min-w-0 items-center gap-2">
->>>>>>> 86479bc2402798b7b6f9bf7b67513f340a129046
-                    <Avatar>
-                        <AvatarImage
-                            src={post.owner.picture}
-                            alt={post.owner.nickname}
-                        />
-                        <AvatarFallback>
-                            {post.owner.nickname?.charAt(0).toUpperCase() || "?"}
-                        </AvatarFallback>
-                    </Avatar>
-<<<<<<< HEAD
+                    {post.owner &&
+                        <CardTitle className="flex min-w-0 items-center gap-2">
+                            <Avatar>
+                                <AvatarImage
+                                    src={post.owner.picture}
+                                    alt={post.owner.nickname}
+                                />
+                                <AvatarFallback>
+                                    {post.owner.nickname?.charAt(0).toUpperCase() || "?"}
+                                </AvatarFallback>
+                            </Avatar>
 
-                    <Link
-                        href={`/profile/${post.owner.username}`}
-                        className="min-w-0 truncate font-mono text-sm text-muted-foreground transition-colors hover:text-primary"
-                    >
-                        @{post.owner.username}
-                    </Link>
+                            <Link
+                                href={`/profile/${post.owner.sub}`}
+                                className="min-w-0 truncate font-mono text-sm text-muted-foreground transition-colors hover:text-primary"
+                            >
+                                @{post.owner.nickname}
+                            </Link>
+                        </CardTitle>
+                    }
                 </CardTitle>
-
-=======
-                    <Link href={`/profile/${post.owner.sub}`}>
-                        <span className="cursor-pointer truncate font-mono leading-relaxed text-balance transition hover:text-primary">
-                            @{post.owner.nickname}
-                        </span>
-                    </Link>
-                </CardTitle>}
->>>>>>> 86479bc2402798b7b6f9bf7b67513f340a129046
                 <CardAction>
-                    {/* Outline variant: the cover and title stay the main focus */}
                     <Button
                         size="sm"
                         variant="outline"
                         onClick={onFollow}
-                        aria-label={`Follow ${post.owner.username}`}
+                        aria-label={`Follow ${post.owner?.nickname}`}
                     >
                         <PlusIcon /> Follow
                     </Button>
@@ -71,19 +59,13 @@ const PostCard: FC<PostCardProps> = ({ post, onFollow, className, ...props }) =>
             </CardHeader>
 
             <CardContent className="flex flex-col gap-4">
-                {/* 2. Cover: the whole image is a link to the post */}
                 <Link
                     href={`/post/${post.id}`}
                     className="group relative block aspect-16/10 w-full overflow-hidden rounded-xl bg-muted"
                 >
                     <Image
-<<<<<<< HEAD
-                        src={post.cover}
-                        alt={`Cover of "${post.title}"`}
-=======
                         src={post.cover || "/assets/post/post_01.jpg"}
                         alt={`Post of ${post.owner?.nickname}`}
->>>>>>> 86479bc2402798b7b6f9bf7b67513f340a129046
                         fill
                         placeholder="blur"
                         blurDataURL={BLUR_DATA_URL}
@@ -93,7 +75,6 @@ const PostCard: FC<PostCardProps> = ({ post, onFollow, className, ...props }) =>
                     <div className="pointer-events-none absolute inset-0 rounded-xl inset-ring-1 inset-ring-foreground/10" />
                 </Link>
 
-                {/* 3. Content: strong title, quieter description, both clamped for uniform cards */}
                 <div className="flex flex-col gap-1.5">
                     <h2 className="line-clamp-2 text-lg leading-snug font-semibold tracking-tight text-balance">
                         <Link
