@@ -47,7 +47,7 @@ const AuthProfile = async () => {
 
                                  } />
             <DropdownMenuContent className="w-45" align="end">
-                <DropdownMenuItem render={<Link href={`/profile/${user.nickname}`} />}>
+                <DropdownMenuItem render={<Link href={`/profile/${user.sub}`} />}>
                     <UserIcon /> Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem render={<Link href="/settings" />}>
