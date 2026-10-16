@@ -33,7 +33,7 @@ const Page: FC<Props> = async ({ params }) => {
 
     return (
         <div className="flex flex-col p-2 [--avatar:5rem] sm:[--avatar:6rem] md:[--avatar:7.5rem]">
-            <div className="group relative aspect-video w-full cursor-pointer rounded-xl sm:aspect-[16/6]">
+            <div className="group relative aspect-video w-full cursor-pointer rounded-xl sm:aspect-16/6">
                 <Image
                     src="/assets/post/post_01.jpg"
                     alt={`Post of ${username}`}

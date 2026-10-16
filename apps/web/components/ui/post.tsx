@@ -9,17 +9,23 @@ import { Button } from "@workspace/ui/components/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card"
 import { BLUR_DATA_URL } from "@/lib/constants"
+import { cn } from "@workspace/ui/lib/utils"
 
 interface PostCardProps extends ComponentProps<"div"> {
     post: Post
     onFollow: () => void
 }
 
-const PostCard: FC<PostCardProps> = ({ post, onFollow, ...props }) => {
+const PostCard: FC<PostCardProps> = ({ post, onFollow, className, ...props }) => {
     return (
-        <Card {...props} size="sm">
+        <Card
+            {...props}
+            size="sm"
+            className={cn("overflow-hidden transition-shadow hover:shadow-md", className)}
+        >
+            {/* 1. Author: avatar + username on the left, secondary action on the right */}
             <CardHeader>
-                <CardTitle className="flex min-w-0 items-center gap-2">
+                <CardTitle className="flex min-w-0 items-center gap-2.5">
                     <Avatar>
                         <AvatarImage
                             src={post.owner.avatar}
@@ -29,40 +35,62 @@ const PostCard: FC<PostCardProps> = ({ post, onFollow, ...props }) => {
                             {post.owner.username.charAt(0).toUpperCase()}
                         </AvatarFallback>
                     </Avatar>
-                    <Link href={`/profile/${post.owner.username}`}>
-                        <span className="cursor-pointer truncate font-mono leading-relaxed text-balance transition hover:text-primary">
-                            @{post.owner.username}
-                        </span>
+
+                    <Link
+                        href={`/profile/${post.owner.username}`}
+                        className="min-w-0 truncate font-mono text-sm text-muted-foreground transition-colors hover:text-primary"
+                    >
+                        @{post.owner.username}
                     </Link>
                 </CardTitle>
+
                 <CardAction>
-                    <Button size="sm" onClick={onFollow}>
+                    {/* Outline variant: the cover and title stay the main focus */}
+                    <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={onFollow}
+                        aria-label={`Follow ${post.owner.username}`}
+                    >
                         <PlusIcon /> Follow
                     </Button>
                 </CardAction>
             </CardHeader>
-            <CardContent>
-                <div className="mb-2 flex flex-col gap-2">
-                    <h2 className="text-xl leading-relaxed font-bold text-balance">
-                        {post.title}
-                    </h2>
-                    {post.description && (
-                        <p className="leading-relaxed text-balance">
-                            {post.description}
-                        </p>
-                    )}
-                </div>
-                <div className="group relative aspect-16/10 w-full cursor-pointer overflow-hidden rounded-xl">
+
+            <CardContent className="flex flex-col gap-4">
+                {/* 2. Cover: the whole image is a link to the post */}
+                <Link
+                    href={`/post/${post.id}`}
+                    className="group relative block aspect-16/10 w-full overflow-hidden rounded-xl bg-muted"
+                >
                     <Image
                         src={post.cover}
-                        alt={`Post of ${post.owner.username}`}
+                        alt={`Cover of "${post.title}"`}
                         fill
                         placeholder="blur"
                         blurDataURL={BLUR_DATA_URL}
                         sizes="(max-width: 768px) 100vw, 480px"
-                        className="object-cover transition group-hover:scale-105"
+                        className="object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-105"
                     />
                     <div className="pointer-events-none absolute inset-0 rounded-xl inset-ring-1 inset-ring-foreground/10" />
+                </Link>
+
+                {/* 3. Content: strong title, quieter description, both clamped for uniform cards */}
+                <div className="flex flex-col gap-1.5">
+                    <h2 className="line-clamp-2 text-lg leading-snug font-semibold tracking-tight text-balance">
+                        <Link
+                            href={`/post/${post.id}`}
+                            className="transition-colors hover:text-primary"
+                        >
+                            {post.title}
+                        </Link>
+                    </h2>
+
+                    {post.description && (
+                        <p className="line-clamp-2 text-sm leading-relaxed text-pretty text-muted-foreground">
+                            {post.description}
+                        </p>
+                    )}
                 </div>
             </CardContent>
         </Card>
