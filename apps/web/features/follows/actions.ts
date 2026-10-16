@@ -1,7 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { follow, unfollow } from "@workspace/db"
+import { follow, unfollow } from "@workspace/db/models/follow"
 import { auth0 } from "@/lib/auth0"
 
 export async function toggleFollow(targetSub: string, shouldFollow: boolean) {

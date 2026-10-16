@@ -4,7 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { PlusIcon } from "lucide-react"
 import { ComponentProps, FC } from "react"
-import { Post } from "@workspace/ui/interfaces/post"
+import { Post } from "@workspace/db/models/post"
 import { Button } from "@workspace/ui/components/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@workspace/ui/components/card"
@@ -25,16 +25,21 @@ const PostCard: FC<PostCardProps> = ({ post, onFollow, className, ...props }) =>
         >
             {/* 1. Author: avatar + username on the left, secondary action on the right */}
             <CardHeader>
+<<<<<<< HEAD
                 <CardTitle className="flex min-w-0 items-center gap-2.5">
+=======
+                {post.owner && <CardTitle className="flex min-w-0 items-center gap-2">
+>>>>>>> 86479bc2402798b7b6f9bf7b67513f340a129046
                     <Avatar>
                         <AvatarImage
-                            src={post.owner.avatar}
-                            alt={post.owner.username}
+                            src={post.owner.picture}
+                            alt={post.owner.nickname}
                         />
                         <AvatarFallback>
-                            {post.owner.username.charAt(0).toUpperCase()}
+                            {post.owner.nickname?.charAt(0).toUpperCase() || "?"}
                         </AvatarFallback>
                     </Avatar>
+<<<<<<< HEAD
 
                     <Link
                         href={`/profile/${post.owner.username}`}
@@ -44,6 +49,14 @@ const PostCard: FC<PostCardProps> = ({ post, onFollow, className, ...props }) =>
                     </Link>
                 </CardTitle>
 
+=======
+                    <Link href={`/profile/${post.owner.sub}`}>
+                        <span className="cursor-pointer truncate font-mono leading-relaxed text-balance transition hover:text-primary">
+                            @{post.owner.nickname}
+                        </span>
+                    </Link>
+                </CardTitle>}
+>>>>>>> 86479bc2402798b7b6f9bf7b67513f340a129046
                 <CardAction>
                     {/* Outline variant: the cover and title stay the main focus */}
                     <Button
@@ -64,8 +77,13 @@ const PostCard: FC<PostCardProps> = ({ post, onFollow, className, ...props }) =>
                     className="group relative block aspect-16/10 w-full overflow-hidden rounded-xl bg-muted"
                 >
                     <Image
+<<<<<<< HEAD
                         src={post.cover}
                         alt={`Cover of "${post.title}"`}
+=======
+                        src={post.cover || "/assets/post/post_01.jpg"}
+                        alt={`Post of ${post.owner?.nickname}`}
+>>>>>>> 86479bc2402798b7b6f9bf7b67513f340a129046
                         fill
                         placeholder="blur"
                         blurDataURL={BLUR_DATA_URL}
