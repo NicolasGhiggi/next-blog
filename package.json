@@ -29,7 +29,9 @@
   "dependencies": {
     "@auth0/nextjs-auth0": "^4.31.1",
     "@hookform/resolvers": "^5.9.1",
+    "auth0": "^7.5.0",
     "jose": "^6.2.12",
-    "react-hook-form": "^7.89.0"
+    "react-hook-form": "^7.89.0",
+    "server-only": "^0.0.1"
   }
 }

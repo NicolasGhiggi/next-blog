@@ -5,5 +5,6 @@ export interface User {
     nickname?: string
     picture?: string
     emailVerified?: boolean
+    createdAt?: string
     updatedAt?: string
 }
