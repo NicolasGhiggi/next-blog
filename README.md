@@ -1,4 +1,6 @@
-# next-blog
+<p align="left">
+  <img alt="header" src="https://shieldcn.dev/header/graph.svg?title=Next+Blog&amp;subtitle=Multi-user+Markdown+blog+platform+built+with+Next.js%2C+Auth0+and+shadcn%2Fui.&amp;logo=nextdotjs&amp;mode=dark&amp;align=left&amp;font=geist&amp;image=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1451187580459-43490279c0fa%3Fw%3D1600%26q%3D70%26fit%3Dcrop%26fm%3Djpg" />
+</p>
 
 A multi-user blogging platform: every user can have their own public profile and publish posts written in **Markdown**. Built with **Next.js** and **Auth0**, in a single **monorepo**. The UI is crafted _pixel perfect_ with **shadcn/ui** and **Tailwind CSS**.
 
@@ -6,27 +8,26 @@ A multi-user blogging platform: every user can have their own public profile and
 
 ## Table of Contents
 
-- [next-blog](#next-blog)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-    - [User area](#user-area)
-    - [General](#general)
-  - [Tech Stack](#tech-stack)
-  - [Monorepo Structure](#monorepo-structure)
-  - [Requirements](#requirements)
-  - [Installation](#installation)
-  - [Auth0 Setup](#auth0-setup)
-  - [Environment Variables](#environment-variables)
-    - [Web app (`apps/web/.env.local`)](#web-app-appswebenvlocal)
-  - [Running in Development](#running-in-development)
-  - [Authentication Flow](#authentication-flow)
-  - [How Posts Work](#how-posts-work)
-  - [Application Areas](#application-areas)
-  - [Useful Scripts](#useful-scripts)
-  - [Roadmap](#roadmap)
-  - [Contributing](#contributing)
-  - [Security](#security)
-  - [License](#license)
+- [Table of Contents](#table-of-contents)
+- [Features](#features)
+  - [User area](#user-area)
+  - [General](#general)
+- [Tech Stack](#tech-stack)
+- [Monorepo Structure](#monorepo-structure)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Auth0 Setup](#auth0-setup)
+- [Environment Variables](#environment-variables)
+  - [Web app (`apps/web/.env.local`)](#web-app-appswebenvlocal)
+- [Running in Development](#running-in-development)
+- [Authentication Flow](#authentication-flow)
+- [How Posts Work](#how-posts-work)
+- [Application Areas](#application-areas)
+- [Useful Scripts](#useful-scripts)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [Security](#security)
+- [License](#license)
 
 ---
 
